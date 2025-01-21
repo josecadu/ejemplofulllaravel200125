@@ -46,7 +46,7 @@ Gestion Empleados
                 </th>
                 <td class="px-6 py-4">
                     <div class="p-1 rounded-xl w-full text-center font-bold text-white bg-[{{$item->departament->color}}]">
-                        {{$item->departament->nombre}}
+                        <a href="{{route('humans.index', $item->departament_id)}}">{{$item->departament->nombre}}</a>
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -57,14 +57,26 @@ Gestion Empleados
                     </ul>
                 </td>
                 <td class="px-6 py-4">
-                    <p @class([ 'p-1 rounded-xl font-bold text-white text-center' , 'bg-red-600'=>$item->activo=='NO',
-                        'bg-blue-600'=>$item->activo=='SI'
-                        ]) >
-                        {{$item->activo}}
-                    </p>
+                    <form method="POST" action="{{route('humans.editactivo', $item)}}">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" @class([ 'w-32 p-1 rounded-xl font-bold text-white text-center' , 'bg-red-600'=>$item->activo=='NO',
+                            'bg-blue-600'=>$item->activo=='SI'
+                            ]) >
+                            {{$item->activo}}
+                        </button>
+                    </form>
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
-
+                    <form action="{{route('humans.destroy', $item)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{route('humans.edit', $item)}}" class="mr-2">
+                            <i class="fas fa-edit text-lg"></i>
+                        </a>
+                        <button type='submit'>
+                            <i class="fas fa-trash text-lg"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach
@@ -74,6 +86,7 @@ Gestion Empleados
         {{$empleados->links()}}
     </div>
 </div>
-
-
 @endsection()
+@section('alertas')
+<x-comalerta />
+@endsection

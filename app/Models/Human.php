@@ -22,4 +22,8 @@ class Human extends Model
     public function roles(): BelongsToMany{
         return  $this->belongsToMany(Role::class);
     }
+
+    public function getArrayHumanRolesId(): array{
+        return $this->roles->pluck('id')->toArray();
+    }
 }

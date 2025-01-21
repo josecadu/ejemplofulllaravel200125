@@ -63,7 +63,8 @@ Crear Usuario
             <div class="flex items-center space-x-6">
                 @foreach ($roles as $rol)
                 <label class="flex items-center space-x-2 italic" for={{$rol->id}}>
-                    <input id="{{$rol->id}}" type="checkbox" name="role_id[]" value="{{$rol->id}}" class="form-checkbox h-4 w-4 text-indigo-600">
+                    <input id="{{$rol->id}}" type="checkbox" name="role_id[]" @checked(in_array($rol->id, old('role_id', []))) 
+                    value="{{$rol->id}}" class="form-checkbox h-4 w-4 text-indigo-600">
                     <span>#{{$rol->nombre}}</span>
                 </label>
                 @endforeach
